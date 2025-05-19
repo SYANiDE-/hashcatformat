@@ -12,6 +12,14 @@ function looper {
                 password=$(cut -d ':' -f 2 <<<$line)
                 echo -e "${username}:${password}"
                 ;;
+            5600)
+                # 5600 | NetNTLMv2
+                username=$((\
+                    cut -d ':' -f 1,3 | tr ':' ' ' |\
+                    awk -F' ' '{print $2 "\\\\" $1}') <<<$line)
+                password=$(cut -d ':' -f 7 <<<$line)
+                echo -e "${username}:${password}"
+                ;;
             13100)
                 # 13100 | Kerberos 5, etype 23, TGS-REP
                 username=$((\
