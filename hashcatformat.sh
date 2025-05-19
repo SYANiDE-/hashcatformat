@@ -6,11 +6,17 @@ function looper {
     OPTARG=$1
     for line in ${lines[@]}; do 
         case $OPTARG in
+            2100)
+                # 2100 | Domain Cached Credentials 2 (DCC2), MS Cache 2
+                username=$(cut -d '#' -f 2 <<<$line)
+                password=$(cut -d ':' -f 2 <<<$line)
+                echo -e "${username}:${password}"
+                ;;
             13100)
                 # 13100 | Kerberos 5, etype 23, TGS-REP
                 username=$((\
                     cut -d '*' -f 2 |\
-                    awk -F '$' '{print $2 "\\" $1}') <<<$line)
+                    awk -F '$' '{print $2 "\\\\" $1}') <<<$line)
                 password=$(cut -d ':' -f 2- <<<$line)
                 echo -e "${username}:${password}"
                 ;;
