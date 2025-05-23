@@ -21,7 +21,7 @@ function looper {
                 echo -e "${username}:${password}"
                 ;;
             13100)
-                # 13100 | Kerberos 5, etype 23, TGS-REP
+                # 13100 | Kerberos 5, etype 23, TGS-REP  (kerberoast)
                 username=$((\
                     cut -d '*' -f 2 |\
                     awk -F '$' '{print $2 "\\\\" $1}') <<<$line)
@@ -29,7 +29,7 @@ function looper {
                 echo -e "${username}:${password}"
                 ;;
             18200)
-                # 18200 | Kerberos 5, etype 23, AS-REP
+                # 18200 | Kerberos 5, etype 23, AS-REP  (asreproast)
                 username=$((\
                     cut -d '$' -f 4 |cut -d ':' -f 1 | tr '@' ' ' |\
                     awk -F ' ' '{print $2 "\\\\" $1 }') <<<$line)
